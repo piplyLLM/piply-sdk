@@ -1,5 +1,5 @@
 # PiplyLLM — On-Chain LLM Utility for Solana
-![Solana Monad SDK Banner](./public/banner.png)
+![PiplyLLM](./public/background.jpg)
 
 ## Full SDK Documentation
 
