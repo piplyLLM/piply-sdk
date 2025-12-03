@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Browser Example</title>
+</head>
+<body>
+  <h1>Browser Example</h1>
+  <script type="module">
+    import { PiplyClient } from 'piply-sdk';
+    import { Connection } from '@solana/web3.js';
+
+    const piply = new PiplyClient({
+      rpc: new Connection('https://api.mainnet-beta.solana.com'),
+      relayerUrl: 'https://api.piply.io',
+    });
+
+    // Assume wallet is connected
+    // const out = await piply.generateText({ model: 'piply-compact-v1', prompt: 'Write a meme coin slogan', wallet: window.solana.publicKey.toString() });
+    // console.log(out.text);
+  </script>
+</body>
+</html>

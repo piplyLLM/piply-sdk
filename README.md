@@ -1,2 +1,19 @@
-# piply-sdk
-Generate, enhance, and publish AI-generated content directly on Solana. Wallet-first authentication, lightning-fast inference, and built for the meme economy.
+# PiplyLLM Monorepo
+
+This is the full monorepo for PiplyLLM, a Solana LLM utility.
+
+## Structure
+
+- `apps/`: Applications (landing, docs, playground)
+- `packages/`: Shared packages (sdk, types, utils)
+- `examples/`: Usage examples
+
+## Setup
+
+1. `npm install`
+2. `npm run build`
+3. Run examples or start apps with `npm run dev`
+
+## SDK Usage
+
+See examples/ for runnable code.

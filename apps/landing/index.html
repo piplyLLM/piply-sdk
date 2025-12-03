@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PiplyLLM — On-Chain LLM Utility for Solana</title>
+  <meta name="description" content="Generate, enhance, and publish AI-generated content directly on Solana, wallet-first and lightning-fast.">
+  <meta property="og:title" content="PiplyLLM — On-Chain LLM Utility for Solana">
+  <meta property="og:description" content="Generate, enhance, and publish AI-generated content directly on Solana, wallet-first and lightning-fast.">
+  <meta property="og:image" content="https://piply.io/og-image.png">
+  <meta property="og:url" content="https://piply.io">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #000; color: #fff; margin: 0; padding: 0; }
+    .animate-clouds { background: linear-gradient(45deg, #000, #111); animation: clouds 20s infinite linear; }
+    @keyframes clouds { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+    .hero { position: relative; width: 100%; padding: 6rem 0; text-align: center; background: #000; overflow: hidden; }
+    .hero .clouds { position: absolute; inset: 0; opacity: 0.2; background: url('thin-clouds.png') repeat; animation: clouds 20s infinite linear; }
+    .hero h1 { font-size: 3rem; font-weight: bold; margin-bottom: 1rem; }
+    .hero p { font-size: 1.125rem; margin-bottom: 2rem; }
+    .hero .buttons { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; }
+    .hero .buttons a { padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; text-decoration: none; }
+    .hero .example { margin: 0 auto; width: 100%; max-width: 28rem; padding: 1.5rem; background: rgba(255,255,255,0.1); border-radius: 1rem; box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+    .hero .example p { font-size: 0.875rem; opacity: 0.7; margin-bottom: 0.5rem; }
+    .hero .example pre { text-align: left; font-size: 0.75rem; }
+    .section { padding: 4rem 0; text-align: center; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .feature { padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 1rem; }
+    .code-example { background: #111; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0; text-align: left; }
+    .footer { padding: 2rem 0; background: #111; text-align: center; }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="clouds"></div>
+    <h1>PiplyLLM — On-Chain LLM Utility for Solana</h1>
+    <p>Generate, enhance, and publish AI-generated content directly on Solana, wallet-first and lightning-fast.</p>
+    <div class="buttons">
+      <a href="#app" class="bg-cyan-500">Launch App — onProgress</a>
+      <a href="/docs" class="bg-purple-500">Launch SDK</a>
+      <a href="/docs" class="border border-white">Docs</a>
+      <a href="https://discord.gg/piply" class="border border-white">Join Discord</a>
+    </div>
+    <div class="example">
+      <p>Example</p>
+      <pre>Prompt: "Generate a meme-style description for PiplyCoin"</pre>
+      <pre>Output: "PiplyCoin — the coin that pumps your vibes even when the chart doesn't."</pre>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Why PiplyLLM?</h2>
+    <p>PiplyLLM brings AI directly to Solana, enabling wallet-first interactions for generating content, metadata, and more. No external providers, fully on-chain ready.</p>
+  </section>
+
+  <section class="section">
+    <h2>Features</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Wallet-Signed Requests</h3>
+        <p>Secure authentication via Solana wallets.</p>
+      </div>
+      <div class="feature">
+        <h3>Streaming Generation</h3>
+        <p>Real-time text generation with streaming support.</p>
+      </div>
+      <div class="feature">
+        <h3>On-Chain Metadata</h3>
+        <p>Build transactions for publishing metadata directly on Solana.</p>
+      </div>
+      <div class="feature">
+        <h3>Moderation</h3>
+        <p>Built-in content moderation endpoint.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Architecture</h2>
+    <pre>
+Browser/Node
+   ↓ wallet signature / API key
+Piply SDK
+   ↓
+Piply Relayer
+   ↓ job verified
+Piply Inference Node
+   ↓ result
+Solana Program (optional write to chain)
+    </pre>
+  </section>
+
+  <section class="section">
+    <h2>SDK Quickstart</h2>
+    <p>Install the SDK:</p>
+    <div class="code-example">
+      <code>npm install piply-sdk</code>
+    </div>
+    <p>Browser example:</p>
+    <div class="code-example">
+      <code>
+import { PiplyClient } from "piply-sdk";
+
+const piply = new PiplyClient({
+  rpc: new Connection(process.env.SOLANA_RPC_URL),
+  relayerUrl: process.env.PIPLY_RELAYER_URL,
+});
+
+await window.solana.connect();
+
+const out = await piply.generateText({
+  model: "piply-compact-v1",
+  prompt: "Write a meme coin slogan",
+  wallet: window.solana.publicKey.toString(),
+});
+
+console.log(out.text);
+      </code>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Recipes</h2>
+    <h3>Memecoin Metadata Generator</h3>
+    <div class="code-example">
+      <code>
+const metadata = await piply.generateText({
+  model: "piply-compact-v1",
+  prompt: "Generate metadata for a new memecoin",
+  wallet: wallet.publicKey.toString(),
+});
+const tx = await piply.createOnchainMetadataTx({
+  metadata: metadata.text,
+  wallet: wallet.publicKey.toString(),
+});
+      </code>
+    </div>
+    <h3>TX Memo Generator</h3>
+    <div class="code-example">
+      <code>
+const memo = await piply.generateText({
+  model: "piply-compact-v1",
+  prompt: "Generate a fun memo for this transaction",
+  wallet: wallet.publicKey.toString(),
+});
+      </code>
+    </div>
+    <h3>NFT Batch Generator</h3>
+    <div class="code-example">
+      <code>
+for (let i = 0; i < 10; i++) {
+  const desc = await piply.generateText({
+    model: "piply-compact-v1",
+    prompt: `Generate description for NFT ${i}`,
+    wallet: wallet.publicKey.toString(),
+  });
+  // Create NFT with desc
+}
+      </code>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Security</h2>
+    <p>All requests are signed by your wallet or authenticated via API key. No data is stored externally.</p>
+  </section>
+
+  <section class="section">
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Use wallet signatures for browser apps.</li>
+      <li>Use API keys for backend services.</li>
+      <li>Moderate content before publishing.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Pricing</h2>
+    <p>Pricing details coming soon. Free tier available for testing.</p>
+  </section>
+
+  <section class="section">
+    <h2>FAQ</h2>
+    <p><strong>What is PiplyLLM?</strong> An on-chain LLM utility for Solana.</p>
+    <p><strong>How to get started?</strong> Install the SDK and follow the docs.</p>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2025 Piply. All rights reserved.</p>
+  </footer>
+</body>
+</html>
